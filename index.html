@@ -1,0 +1,192 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lexi - Learn a Word Every Day</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="logo">Lexi<span>.</span></div>
+        <p class="tagline">A little word. A little progress. Every day.</p>
+    </header>
+
+    <nav class="navbar">
+        <button class="nav-btn active" data-page="home">Home</button>
+        <button class="nav-btn" data-page="vocabulary">My Vocabulary</button>
+        <button class="nav-btn" data-page="tracker">Consistency Tracker</button>
+    </nav>
+
+    <main class="container">
+
+        <!-- HOME PAGE -->
+        <section id="home" class="page active">
+
+            <div class="welcome-section">
+                <p class="small-heading">WELCOME TO LEXI</p>
+                <h1>Make every day a little more meaningful.</h1>
+                <p>Discover a new word every day and gradually build your vocabulary.</p>
+            </div>
+
+            <div class="daily-card">
+                <p class="section-label">YOUR DAILY WORD</p>
+
+                <h2 id="dailyWord">Loading...</h2>
+
+                <p id="dailyPronunciation" class="pronunciation"></p>
+
+                <div class="word-info">
+                    <span id="dailyLevel" class="tag"></span>
+                    <span id="dailyCategory" class="tag"></span>
+                </div>
+
+                <div class="meaning-box">
+                    <h3>Meaning</h3>
+                    <p id="dailyMeaning"></p>
+                </div>
+
+                <div class="example-box">
+                    <h3>Example</h3>
+                    <p id="dailyExample"></p>
+                </div>
+
+                <div class="synonyms-box">
+                    <h3>Synonyms</h3>
+                    <p id="dailySynonyms"></p>
+                </div>
+
+                <div class="daily-actions">
+                    <button id="saveDailyBtn" class="primary-btn">
+                        Save Word
+                    </button>
+
+                    <button id="learnDailyBtn" class="secondary-btn">
+                        Mark as Learned
+                    </button>
+                </div>
+
+                <p id="dailyMessage" class="message"></p>
+            </div>
+
+            <!-- PERSONALIZED VOCABULARY -->
+            <div class="explore-section">
+
+                <div class="section-heading">
+                    <p class="section-label">EXPLORE MORE</p>
+                    <h2>Personalized Vocabulary</h2>
+                    <p>Find words according to your learning level and interests.</p>
+                </div>
+
+                <div class="filters">
+
+                    <div class="filter-group">
+                        <label for="levelFilter">Difficulty Level</label>
+                        <select id="levelFilter">
+                            <option value="All">All Levels</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Intermediate">Intermediate</option>
+                            <option value="Advanced">Advanced</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="categoryFilter">Category</label>
+                        <select id="categoryFilter">
+                            <option value="All">All Categories</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div id="exploreWords" class="words-grid"></div>
+
+            </div>
+
+        </section>
+
+        <!-- MY VOCABULARY PAGE -->
+        <section id="vocabulary" class="page">
+
+            <div class="page-heading">
+                <p class="section-label">YOUR PERSONAL COLLECTION</p>
+                <h1>My Vocabulary</h1>
+                <p>All the words you have saved in one place.</p>
+            </div>
+
+            <div class="vocabulary-stats">
+                <div class="stat-card">
+                    <h2 id="savedCount">0</h2>
+                    <p>Saved Words</p>
+                </div>
+            </div>
+
+            <input
+                type="text"
+                id="searchSaved"
+                class="search-input"
+                placeholder="Search your saved words..."
+            >
+
+            <div id="savedWords" class="words-grid"></div>
+
+        </section>
+
+        <!-- CONSISTENCY TRACKER PAGE -->
+        <section id="tracker" class="page">
+
+            <div class="page-heading">
+                <p class="section-label">YOUR LEARNING JOURNEY</p>
+                <h1>Consistency Tracker</h1>
+                <p>Small steps every day create lasting habits.</p>
+            </div>
+
+            <div class="tracker-stats">
+
+                <div class="stat-card">
+                    <h2 id="totalDays">0</h2>
+                    <p>Total Learning Days</p>
+                </div>
+
+                <div class="stat-card">
+                    <h2 id="currentStreak">0</h2>
+                    <p>Current Streak</p>
+                </div>
+
+                <div class="stat-card">
+                    <h2 id="longestStreak">0</h2>
+                    <p>Longest Streak</p>
+                </div>
+
+            </div>
+
+            <div class="calendar-card">
+                <div class="calendar-header">
+                    <button id="previousMonth" class="month-btn">Previous</button>
+                    <h2 id="calendarMonth"></h2>
+                    <button id="nextMonth" class="month-btn">Next</button>
+                </div>
+
+                <div id="calendar" class="calendar-grid"></div>
+
+                <p class="calendar-note">
+                    Highlighted dates represent your learning days.
+                </p>
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <p>Lexi - Learn a Word Every Day</p>
+    </footer>
+
+    <script src="words.js"></script>
+    <script src="script.js"></script>
+
+</body>
+</html>
