@@ -16,3 +16,5 @@
 
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
+  console.log("Firebase connected successfully!",
+  app.options.projectId);
