@@ -15,12 +15,13 @@
         <p class="tagline">A little word. A little progress. Every day.</p>
     </header>
 
-<nav class="navbar">
-    <button class="nav-btn active" data-page="home">Home</button>
-    <button class="nav-btn" data-page="vocabulary">My Vocabulary</button>
-    <button class="nav-btn" data-page="tracker">Consistency Tracker</button>
-    <button class="nav-btn" data-page="settings">Settings</button>
-</nav>
+    <nav class="navbar">
+        <button class="nav-btn active" data-page="home">Home</button>
+        <button class="nav-btn" data-page="vocabulary">My Vocabulary</button>
+        <button class="nav-btn" data-page="tracker">Consistency Tracker</button>
+        <button class="nav-btn" data-page="settings">Settings</button>
+    </nav>
+
     <main class="container">
 
         <!-- HOME PAGE -->
@@ -175,6 +176,47 @@
                 <p class="calendar-note">
                     Highlighted dates represent your learning days.
                 </p>
+            </div>
+
+        </section>
+
+        <!-- SETTINGS PAGE -->
+        <section id="settings" class="page">
+
+            <div class="page-heading">
+                <p class="section-label">PERSONALIZE YOUR EXPERIENCE</p>
+                <h1>Settings</h1>
+                <p>Make Lexi fit your daily routine.</p>
+            </div>
+
+            <div class="daily-card">
+
+                <p class="section-label">DAILY REMINDER</p>
+                <h2>Never miss your daily word.</h2>
+
+                <p>
+                    Choose the time when you would like to receive
+                    your daily vocabulary reminder.
+                </p>
+
+                <div class="filter-group">
+                    <label for="notificationTime">
+                        Preferred Notification Time
+                    </label>
+
+                    <input
+                        type="time"
+                        id="notificationTime"
+                        value="08:00"
+                    >
+                </div>
+
+                <button id="saveNotificationTime" class="primary-btn">
+                    Save Time
+                </button>
+
+                <p id="notificationMessage" class="message"></p>
+
             </div>
 
         </section>
