@@ -1,8 +1,9 @@
 
 
+
 // LEXI APPLICATION
 
-// Check whether the vocabulary data is available.
+// Check whether vocabulary data is available.
 
 if (!window.lexiWords || window.lexiWords.length === 0) {
     alert("Vocabulary data could not be loaded. Please check words.js.");
@@ -20,27 +21,22 @@ let learnedDates = JSON.parse(
 );
 
 
+// NOTIFICATION SETTINGS
+
+let notificationTime = localStorage.getItem("lexiNotificationTime") || "08:00";
+
+
 // SAVE DATA
 
 function saveData() {
-
-    localStorage.setItem(
-        "lexiSavedWords",
-        JSON.stringify(savedWords)
-    );
-
-    localStorage.setItem(
-        "lexiLearnedDates",
-        JSON.stringify(learnedDates)
-    );
-
+    localStorage.setItem("lexiSavedWords", JSON.stringify(savedWords));
+    localStorage.setItem("lexiLearnedDates", JSON.stringify(learnedDates));
 }
 
 
 // HELPER FUNCTIONS
 
 function getToday() {
-
     const today = new Date();
 
     const year = today.getFullYear();
@@ -48,14 +44,11 @@ function getToday() {
     const day = String(today.getDate()).padStart(2, "0");
 
     return `${year}-${month}-${day}`;
-
 }
 
 
 function escapeHTML(value) {
-
     return String(value ?? "").replace(/[&<>"']/g, function (character) {
-
         const characters = {
             "&": "&amp;",
             "<": "&lt;",
@@ -65,18 +58,14 @@ function escapeHTML(value) {
         };
 
         return characters[character];
-
     });
-
 }
 
 
 function findWord(wordName) {
-
     return window.lexiWords.find(
         word => word.word.toLowerCase() === wordName.toLowerCase()
     );
-
 }
 
 
@@ -86,7 +75,6 @@ const navButtons = document.querySelectorAll(".nav-btn");
 const pages = document.querySelectorAll(".page");
 
 navButtons.forEach(button => {
-
     button.addEventListener("click", function () {
 
         const selectedPage = this.dataset.page;
@@ -96,7 +84,11 @@ navButtons.forEach(button => {
 
         this.classList.add("active");
 
-        document.getElementById(selectedPage).classList.add("active");
+        const selectedSection = document.getElementById(selectedPage);
+
+        if (selectedSection) {
+            selectedSection.classList.add("active");
+        }
 
         if (selectedPage === "vocabulary") {
             displaySavedWords();
@@ -106,8 +98,11 @@ navButtons.forEach(button => {
             updateTracker();
         }
 
-    });
+        if (selectedPage === "settings") {
+            loadNotificationSettings();
+        }
 
+    });
 });
 
 
@@ -137,26 +132,18 @@ function displayDailyWord() {
     const word = window.lexiWords[wordIndex];
 
     document.getElementById("dailyWord").textContent = word.word;
-
     document.getElementById("dailyPronunciation").textContent =
         word.pronunciation || "";
-
-    document.getElementById("dailyMeaning").textContent =
-        word.meaning;
-
-    document.getElementById("dailyExample").textContent =
-        word.example;
+    document.getElementById("dailyMeaning").textContent = word.meaning;
+    document.getElementById("dailyExample").textContent = word.example;
 
     document.getElementById("dailySynonyms").textContent =
         Array.isArray(word.synonyms)
             ? word.synonyms.join(", ")
             : "";
 
-    document.getElementById("dailyLevel").textContent =
-        word.level;
-
-    document.getElementById("dailyCategory").textContent =
-        word.category;
+    document.getElementById("dailyLevel").textContent = word.level;
+    document.getElementById("dailyCategory").textContent = word.category;
 
     document.getElementById("saveDailyBtn").onclick = function () {
         saveWord(word.word);
@@ -167,7 +154,6 @@ function displayDailyWord() {
     };
 
     updateDailyButtons(word);
-
 }
 
 
@@ -176,18 +162,13 @@ function updateDailyButtons(word) {
     const saveButton = document.getElementById("saveDailyBtn");
     const learnButton = document.getElementById("learnDailyBtn");
 
-    if (savedWords.includes(word.word)) {
-        saveButton.textContent = "Saved";
-    } else {
-        saveButton.textContent = "Save Word";
-    }
+    saveButton.textContent = savedWords.includes(word.word)
+        ? "Saved"
+        : "Save Word";
 
-    if (learnedDates.includes(getToday())) {
-        learnButton.textContent = "Learned Today";
-    } else {
-        learnButton.textContent = "Mark as Learned";
-    }
-
+    learnButton.textContent = learnedDates.includes(getToday())
+        ? "Learned Today"
+        : "Mark as Learned";
 }
 
 
@@ -213,7 +194,6 @@ function saveWord(wordName) {
     if (word) {
         updateDailyButtons(word);
     }
-
 }
 
 
@@ -224,16 +204,13 @@ function markAsLearned() {
     const today = getToday();
 
     if (learnedDates.includes(today)) {
-
         document.getElementById("dailyMessage").textContent =
             "You have already marked today's learning.";
 
         return;
-
     }
 
     learnedDates.push(today);
-
     saveData();
 
     document.getElementById("dailyMessage").textContent =
@@ -246,7 +223,6 @@ function markAsLearned() {
     if (currentWord) {
         updateDailyButtons(currentWord);
     }
-
 }
 
 
@@ -272,9 +248,7 @@ function loadCategories() {
         option.textContent = category;
 
         categoryFilter.appendChild(option);
-
     });
-
 }
 
 
@@ -296,7 +270,6 @@ function displayExploreWords() {
             category === "All" || word.category === category;
 
         return matchesLevel && matchesCategory;
-
     });
 
     if (filteredWords.length === 0) {
@@ -305,7 +278,6 @@ function displayExploreWords() {
             '<p class="empty-message">No words found for these filters.</p>';
 
         return;
-
     }
 
     filteredWords.forEach(word => {
@@ -336,28 +308,21 @@ function displayExploreWords() {
             </p>
 
             <div class="card-actions">
-
                 <button class="card-btn save-btn">
                     ${isSaved ? "Saved" : "Save Word"}
                 </button>
-
             </div>
         `;
 
         const saveButton = card.querySelector(".save-btn");
 
         saveButton.addEventListener("click", function () {
-
             saveWord(word.word);
-
             displayExploreWords();
-
         });
 
         container.appendChild(card);
-
     });
-
 }
 
 
@@ -397,7 +362,6 @@ function displaySavedWords() {
             : '<p class="empty-message">No matching words found.</p>';
 
         return;
-
     }
 
     filteredWords.forEach(wordName => {
@@ -441,15 +405,11 @@ function displaySavedWords() {
         const removeButton = card.querySelector(".remove-btn");
 
         removeButton.addEventListener("click", function () {
-
             removeSavedWord(word.word);
-
         });
 
         container.appendChild(card);
-
     });
-
 }
 
 
@@ -467,13 +427,13 @@ function removeSavedWord(wordName) {
     const dailyWord = document.getElementById("dailyWord").textContent;
 
     if (dailyWord === wordName) {
+
         const word = findWord(wordName);
 
         if (word) {
             updateDailyButtons(word);
         }
     }
-
 }
 
 
@@ -499,11 +459,8 @@ function calculateCurrentStreak() {
     let dateString = getDateString(date);
 
     if (!learnedDates.includes(dateString)) {
-
         date.setDate(date.getDate() - 1);
-
         dateString = getDateString(date);
-
     }
 
     while (learnedDates.includes(dateString)) {
@@ -511,13 +468,10 @@ function calculateCurrentStreak() {
         streak++;
 
         date.setDate(date.getDate() - 1);
-
         dateString = getDateString(date);
-
     }
 
     return streak;
-
 }
 
 
@@ -528,7 +482,6 @@ function getDateString(date) {
     const day = String(date.getDate()).padStart(2, "0");
 
     return `${year}-${month}-${day}`;
-
 }
 
 
@@ -558,21 +511,15 @@ function calculateLongestStreak() {
         );
 
         if (difference === 1) {
-
             current++;
-
         } else {
-
             current = 1;
-
         }
 
         longest = Math.max(longest, current);
-
     }
 
     return longest;
-
 }
 
 
@@ -588,7 +535,6 @@ function updateTracker() {
         calculateLongestStreak();
 
     displayCalendar();
-
 }
 
 
@@ -621,7 +567,6 @@ function displayCalendar() {
         heading.textContent = day;
 
         calendar.appendChild(heading);
-
     });
 
     const firstDay = new Date(year, month, 1).getDay();
@@ -629,11 +574,8 @@ function displayCalendar() {
     const totalDays = new Date(year, month + 1, 0).getDate();
 
     for (let i = 0; i < firstDay; i++) {
-
         const empty = document.createElement("div");
-
         calendar.appendChild(empty);
-
     }
 
     for (let day = 1; day <= totalDays; day++) {
@@ -656,9 +598,7 @@ function displayCalendar() {
         }
 
         calendar.appendChild(cell);
-
     }
-
 }
 
 
@@ -669,7 +609,6 @@ document.getElementById("previousMonth").addEventListener(
         calendarDate.setMonth(calendarDate.getMonth() - 1);
 
         displayCalendar();
-
     }
 );
 
@@ -681,9 +620,66 @@ document.getElementById("nextMonth").addEventListener(
         calendarDate.setMonth(calendarDate.getMonth() + 1);
 
         displayCalendar();
-
     }
 );
+
+
+// SETTINGS - NOTIFICATION TIME
+
+function loadNotificationSettings() {
+
+    const timeInput = document.getElementById("notificationTime");
+
+    if (!timeInput) {
+        return;
+    }
+
+    const savedTime = localStorage.getItem("lexiNotificationTime");
+
+    timeInput.value = savedTime || "08:00";
+}
+
+
+function saveNotificationSettings() {
+
+    const timeInput = document.getElementById("notificationTime");
+    const message = document.getElementById("notificationMessage");
+
+    if (!timeInput || !message) {
+        return;
+    }
+
+    if (!timeInput.value) {
+
+        message.textContent = "Please select a notification time.";
+
+        return;
+    }
+
+    notificationTime = timeInput.value;
+
+    localStorage.setItem(
+        "lexiNotificationTime",
+        notificationTime
+    );
+
+    message.textContent =
+        `Your preferred reminder time is saved: ${notificationTime}.`;
+
+}
+
+
+const saveNotificationButton =
+    document.getElementById("saveNotificationTime");
+
+if (saveNotificationButton) {
+
+    saveNotificationButton.addEventListener(
+        "click",
+        saveNotificationSettings
+    );
+
+}
 
 
 // INITIALIZE LEXI
@@ -704,6 +700,7 @@ function initializeLexi() {
 
     updateTracker();
 
+    loadNotificationSettings();
 }
 
 
