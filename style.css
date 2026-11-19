@@ -1,5 +1,6 @@
 
 
+
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
 
 * {
@@ -496,6 +497,48 @@ body {
     margin-top: 20px;
 }
 
+/* SETTINGS PAGE */
+
+#settings .daily-card {
+    margin-top: 20px;
+}
+
+#settings .daily-card > p:not(.section-label):not(.message) {
+    color: #ff9acb;
+    font-size: 14px;
+    margin-bottom: 22px;
+}
+
+#settings .filter-group {
+    margin-bottom: 22px;
+    max-width: 300px;
+}
+
+#notificationTime {
+    padding: 12px 14px;
+    border: 1px solid #70204b;
+    border-radius: 9px;
+    background: #080808;
+    color: #ffb6d9;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    width: 100%;
+    outline: none;
+    color-scheme: dark;
+}
+
+#notificationTime:focus {
+    border-color: #ff1493;
+}
+
+#saveNotificationTime {
+    margin-top: 5px;
+}
+
+#notificationMessage {
+    min-height: 20px;
+}
+
 /* FOOTER */
 
 .footer {
@@ -554,6 +597,10 @@ body {
         width: 100%;
     }
 
+    #settings .filter-group {
+        max-width: 100%;
+    }
+
     .calendar-card {
         padding: 15px;
     }
@@ -570,5 +617,4 @@ body {
     .calendar-header h2 {
         font-size: 17px;
     }
-
 }
