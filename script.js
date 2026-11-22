@@ -705,3 +705,50 @@ function initializeLexi() {
 
 
 initializeLexi();
+
+
+// ENABLE FIREBASE NOTIFICATIONS
+
+const enableNotificationsButton =
+    document.getElementById("enableNotifications");
+
+if (enableNotificationsButton) {
+
+    enableNotificationsButton.addEventListener("click", async () => {
+
+        const statusMessage =
+            document.getElementById("notificationStatus");
+
+        enableNotificationsButton.disabled = true;
+        enableNotificationsButton.textContent = "Enabling...";
+
+        try {
+
+            if (!window.enableLexiNotifications) {
+                throw new Error("Firebase notification system is not ready. Please refresh the page.");
+            }
+
+            await window.enableLexiNotifications();
+
+            statusMessage.textContent =
+                "Notifications enabled successfully on this device!";
+
+        } catch (error) {
+
+            statusMessage.textContent =
+                error.message || "Could not enable notifications.";
+
+            console.error(error);
+
+        } finally {
+
+            enableNotificationsButton.disabled = false;
+            enableNotificationsButton.textContent =
+                "Enable Notifications";
+
+        }
+
+    });
+
+}
+
